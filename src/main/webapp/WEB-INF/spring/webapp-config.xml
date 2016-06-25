@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <mvc:annotation-driven />
+
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/images/**" location="/images/" />
+    <context:component-scan base-package="com.small.business" />
+
+    <bean id="multipartResolver"
+      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="20000000"/>
+	</bean>
+
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/html/"/>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".html"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+    </bean>
+    
+    <bean id="assignmentTagService" class="com.small.business.service.assignment.AssignmentTagServiceImpl" /> 
+    <bean id="assignmentTagDao" class="com.small.business.dao.assignment.AssignmentTagDaoImpl" /> 
+    
+    <bean id="companyNotepadService" class="com.small.business.service.company.CompanyNotepadServiceImpl" /> 
+    <bean id="companyNotepadDao" class="com.small.business.dao.company.CompanyNotepadDaoImpl" /> 
+    
+    <bean id="companyProfileService" class="com.small.business.service.company.CompanyProfileServiceImpl" /> 
+    <bean id="companyProfileDao" class="com.small.business.dao.company.CompanyProfileDaoImpl" /> 
+        
+    <bean id="companyTagService" class="com.small.business.service.company.CompanyTagServiceImpl" /> 
+    <bean id="companyTagDao" class="com.small.business.dao.company.CompanyTagDaoImpl" /> 
+    
+    <bean id="peopleNotepadService" class="com.small.business.service.people.PeopleNotepadServiceImpl" /> 
+    <bean id="peopleNotepadDao" class="com.small.business.dao.people.PeopleNotepadDaoImpl" /> 
+    
+    <bean id="peopleTagService" class="com.small.business.service.people.PeopleTagServiceImpl" /> 
+    <bean id="peopleTagDao" class="com.small.business.dao.people.PeopleTagDaoImpl" /> 
+        
+    
+    <bean id="currencyService" class="com.small.business.service.people.CurrencyServiceImpl" /> 
+    <bean id="currencyDao" class="com.small.business.dao.people.CurrencyDaoImpl" /> 
+    
+    <bean id="nationalityService" class="com.small.business.service.people.NationalityServiceImpl" /> 
+    <bean id="nationalityDao" class="com.small.business.dao.people.NationalityDaoImpl" /> 
+    
+    
+    <bean id="currentPackageService" class="com.small.business.service.people.CurrentPackageServiceImpl" /> 
+    <bean id="currentPackageDao" class="com.small.business.dao.people.CurrentPackageDaoImpl" /> 
+    
+    <bean id="currentBenefitService" class="com.small.business.service.people.CurrentBenefitServiceImpl" /> 
+    <bean id="currentBenefitDao" class="com.small.business.dao.people.CurrentBenefitDaoImpl" />  
+    
+    <bean id="peopleDetailService" class="com.small.business.service.people.PeopleDetailServiceImpl" /> 
+    <bean id="peopleDetailDao" class="com.small.business.dao.people.PeopleDetailDaoImpl" /> 
+
+    <bean id="assignmentNotepadService" class="com.small.business.service.assignment.AssignmentNotepadServiceImpl" /> 
+    <bean id="assignmentNotepadDao" class="com.small.business.dao.assignment.AssignmentNotepadDaoImpl" /> 
+   
+    <bean id="assignmentCandidateService" class="com.small.business.service.assignment.AssignmentCandidateServiceImpl" /> 
+    <bean id="assignmentCandidateDao" class="com.small.business.dao.assignment.AssignmentCandidateDaoImpl" /> 
+   
+    <bean id="assignmentBriefService" class="com.small.business.service.assignment.AssignmentBriefServiceImpl" /> 
+    <bean id="assignmentBriefDao" class="com.small.business.dao.assignment.AssignmentBriefDaoImpl" /> 
+    
+    <bean id="companyDepartmentService" class="com.small.business.service.company.CompanyDepartmentServiceImpl" /> 
+    <bean id="companyDepartmentDao" class="com.small.business.dao.company.CompanyDepartmentDaoImpl" /> 
+    
+    <bean id="companyLocationService" class="com.small.business.service.company.CompanyLocationServiceImpl" /> 
+    <bean id="companyLocationDao" class="com.small.business.dao.company.CompanyLocationDaoImpl" /> 
+    
+    <bean id="companyNoteService" class="com.small.business.service.company.CompanyNoteServiceImpl" /> 
+    <bean id="companyNoteDao" class="com.small.business.dao.company.CompanyNoteDaoImpl" />  
+    
+    <bean id="companyPeopleService" class="com.small.business.service.company.CompanyPeopleServiceImpl" /> 
+    <bean id="companyPeopleDao" class="com.small.business.dao.company.CompanyPeopleDaoImpl" />  
+    
+    <bean id="companyJournalService" class="com.small.business.service.company.CompanyJournalServiceImpl" /> 
+    <bean id="companyJournalDao" class="com.small.business.dao.company.CompanyJournalDaoImpl" />  
+    
+    <bean id="peopleDocumentService" class="com.small.business.service.people.PeopleDocumentServiceImpl" /> 
+    <bean id="peopleDocumentDao" class="com.small.business.dao.people.PeopleDocumentDaoImpl" />  
+    
+    <bean id="peopleAssignmentService" class="com.small.business.service.people.PeopleAssignmentServiceImpl" /> 
+    <bean id="peopleAssignmentDao" class="com.small.business.dao.people.PeopleAssignmentDaoImpl" />  
+    
+    <bean id="peopleHistoryService" class="com.small.business.service.people.PeopleHistoryServiceImpl" /> 
+    <bean id="peopleHistoryDao" class="com.small.business.dao.people.PeopleHistoryDaoImpl" />  
+    
+    <bean id="peopleEducationService" class="com.small.business.service.people.PeopleEducationServiceImpl" /> 
+    <bean id="peopleEducationDao" class="com.small.business.dao.people.PeopleEducationDaoImpl" />  
+    
+    <bean id="peopleJournalService" class="com.small.business.service.people.PeopleJournalServiceImpl" /> 
+    <bean id="peopleJournalDao" class="com.small.business.dao.people.PeopleJournalDaoImpl" />  
+    
+    <bean id="assignmentService" class="com.small.business.service.assignment.AssignmentServiceImpl" /> 
+    <bean id="assignmentDao" class="com.small.business.dao.assignment.AssignmentDaoImpl" />  
+    
+    <bean id="companyService" class="com.small.business.service.company.CompanyServiceImpl" /> 
+    <bean id="companyDao" class="com.small.business.dao.company.CompanyDaoImpl" />  
+    
+	<bean id="peopleService" class="com.small.business.service.people.PeopleServiceImpl" /> 
+    <bean id="peopleDao" class="com.small.business.dao.people.PeopleDaoImpl" />  
+
+	<bean id="userService" class="com.small.business.service.user.UserServiceImpl" /> 
+    <bean id="userDao" class="com.small.business.dao.user.UserDaoImpl" />  
+   
+ <bean id = "dataSource" class = "org.apache.commons.dbcp.BasicDataSource" destroy-method = "close">  
+	<property name="driverClassName" value="com.mysql.jdbc.Driver"/>  
+	<property name="url" value="jdbc:mysql://localhost:3306/wawoo"/>
+    <property name="username" value="root"/>
+    <property name="password" value="admin"/>
+    <property name="connectionProperties" value="useUnicode=yes"/>
+</bean>
+</beans>

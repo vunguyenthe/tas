@@ -1,0 +1,112 @@
+package com.small.business.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.small.business.model.People;
+import com.small.business.model.PeopleAssignment;
+import com.small.business.model.PeopleDocument;
+import com.small.business.model.PeopleEducation;
+import com.small.business.model.PeopleHistory;
+import com.small.business.model.PeopleJournal;
+
+public class PeopleTest extends BaseMessageTest {
+
+    private static final long id = 1;
+    private static final long journaType = 1;
+    private static final long peopleId = 1;
+    private static final long userId = 1;
+    private static final long yearStarted = 1999;
+    private static final long endedYear = 2016;
+    private static final long companyId = 1;
+    private static final String address = "Ha noi";
+    private static final String createBy = "admin";
+    private static final String email = "vu@gmail.com";
+    private static final String fullName = "Nguyen The Vu";
+    private static final String jobTitle = "PSE";
+    private static final String companyName = "GCS";
+    private static final long assignmentId = 1;
+    private static final String assignmentName = "assignmentName test";
+    private static final String documentName = "a.doc";
+    private static final String notes = "notes sample";
+    private static final long dateCreated = 1;
+
+    public PeopleTest() {
+        super(createMessage());
+    }
+
+    private static People createMessage() {
+
+        PeopleJournal peopleJournal = new PeopleJournal();
+        peopleJournal.setId(id);
+        peopleJournal.setJournaType(journaType);
+        peopleJournal.setNotes("hello");
+        peopleJournal.setPeopleId(peopleId);
+        peopleJournal.setUserId(userId);
+        peopleJournal.setUserName("admin");
+        List<PeopleJournal> listPeopleJournal = new ArrayList<PeopleJournal>();
+
+        PeopleEducation peopleEducation = new PeopleEducation();
+        peopleEducation.setId(id);
+        peopleEducation.setJournaType(journaType);
+        peopleEducation.setQualification("Qualification");
+        peopleEducation.setPeopleId(peopleId);
+        peopleEducation.setYearEnd(endedYear);
+        peopleEducation.setYearStarted(yearStarted);
+        peopleEducation.setJournalName("Tele call");
+        List<PeopleEducation> listPeopleEducation = new ArrayList<PeopleEducation>();
+        listPeopleEducation.add(peopleEducation);
+
+        PeopleHistory peopleHistory = new PeopleHistory();
+        peopleHistory.setId(id);
+        peopleHistory.setCompanyId(companyId);
+        peopleHistory.setCompanyName(companyName);
+        peopleHistory.setPeopleId(peopleId);
+        peopleHistory.setYearEnd(endedYear);
+        peopleHistory.setYearStarted(yearStarted);
+        peopleHistory.setJobTitle(jobTitle);
+        List<PeopleHistory> lisPeopleHistory = new ArrayList<PeopleHistory>();
+        lisPeopleHistory.add(peopleHistory);
+
+        listPeopleJournal.add(peopleJournal);
+
+        PeopleAssignment peopleAssignment = new PeopleAssignment();
+        peopleAssignment.setId(id);
+        peopleAssignment.setAssignmentId(assignmentId);
+        peopleAssignment.setAssignmentName(assignmentName);
+        peopleAssignment.setPeopleId(peopleId);
+        peopleAssignment.setCompanyId(companyId);
+        peopleAssignment.setCompanyName(companyName);
+        peopleAssignment.setId(id);
+        peopleAssignment.setPeopleId(peopleId);
+        List<PeopleAssignment> lisPeopleAssignment = new ArrayList<PeopleAssignment>();
+        lisPeopleAssignment.add(peopleAssignment);
+
+        PeopleDocument peoplePeopleDocument = new PeopleDocument();
+        peoplePeopleDocument.setId(id);
+        peoplePeopleDocument.setCreateBy(createBy);
+        peoplePeopleDocument.setDocumentName(documentName);
+        peoplePeopleDocument.setNotes(notes);
+        peoplePeopleDocument.setId(id);
+        peoplePeopleDocument.setPeopleId(peopleId);
+        peoplePeopleDocument.setPeopleId(peopleId);
+        List<PeopleDocument> listPeopleDocument = new ArrayList<PeopleDocument>();
+        listPeopleDocument.add(peoplePeopleDocument);
+
+        People people = new People();
+        people.setId(id);
+        people.setAddress("aaa");
+        people.setClient(true);
+        people.setCompanyId(companyId);
+        people.setCreateBy(createBy);
+        people.setEmail(email);
+        people.setJournal(listPeopleJournal);
+        people.setEducation(listPeopleEducation);
+        people.setHistory(lisPeopleHistory);
+        people.setAssignment(lisPeopleAssignment);
+        people.setDocument(listPeopleDocument);
+        people.setFullName(fullName);
+        people.setJobTitle(jobTitle);
+        return people;
+    }
+}
