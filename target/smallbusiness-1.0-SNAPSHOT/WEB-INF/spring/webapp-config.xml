@@ -10,7 +10,11 @@
     <mvc:resources mapping="/images/**" location="/images/" />
     <context:component-scan base-package="com.small.business" />
 
-    
+    <bean id="multipartResolver"
+      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="20000000"/>
+	</bean>
+
     <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="resourceLoaderPath" value="/WEB-INF/html/"/>
     </bean>
@@ -21,7 +25,33 @@
         <property name="suffix" value=".html"/>
         <property name="exposeSpringMacroHelpers" value="true"/>
     </bean>
-
+    
+    <bean id="assignmentTagService" class="com.small.business.service.assignment.AssignmentTagServiceImpl" /> 
+    <bean id="assignmentTagDao" class="com.small.business.dao.assignment.AssignmentTagDaoImpl" /> 
+    
+    <bean id="companyNotepadService" class="com.small.business.service.company.CompanyNotepadServiceImpl" /> 
+    <bean id="companyNotepadDao" class="com.small.business.dao.company.CompanyNotepadDaoImpl" /> 
+    
+    <bean id="companyProfileService" class="com.small.business.service.company.CompanyProfileServiceImpl" /> 
+    <bean id="companyProfileDao" class="com.small.business.dao.company.CompanyProfileDaoImpl" /> 
+        
+    <bean id="companyTagService" class="com.small.business.service.company.CompanyTagServiceImpl" /> 
+    <bean id="companyTagDao" class="com.small.business.dao.company.CompanyTagDaoImpl" /> 
+    
+    <bean id="peopleNotepadService" class="com.small.business.service.people.PeopleNotepadServiceImpl" /> 
+    <bean id="peopleNotepadDao" class="com.small.business.dao.people.PeopleNotepadDaoImpl" /> 
+    
+    <bean id="peopleTagService" class="com.small.business.service.people.PeopleTagServiceImpl" /> 
+    <bean id="peopleTagDao" class="com.small.business.dao.people.PeopleTagDaoImpl" /> 
+        
+    
+    <bean id="currencyService" class="com.small.business.service.people.CurrencyServiceImpl" /> 
+    <bean id="currencyDao" class="com.small.business.dao.people.CurrencyDaoImpl" /> 
+    
+    <bean id="nationalityService" class="com.small.business.service.people.NationalityServiceImpl" /> 
+    <bean id="nationalityDao" class="com.small.business.dao.people.NationalityDaoImpl" /> 
+    
+    
     <bean id="currentPackageService" class="com.small.business.service.people.CurrentPackageServiceImpl" /> 
     <bean id="currentPackageDao" class="com.small.business.dao.people.CurrentPackageDaoImpl" /> 
     
