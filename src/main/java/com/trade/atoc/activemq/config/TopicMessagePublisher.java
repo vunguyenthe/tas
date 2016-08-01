@@ -24,13 +24,14 @@ public class TopicMessagePublisher {
         jmsTemplate.convertAndSend(Object);
     }
 
-    public void sendMessages(final String msg) throws JMSException {
+    public void sendMessages(final String msg, final String atocId) throws JMSException {
 
         jmsTemplate.send(new MessageCreator() {
 
             public Message createMessage(Session session) throws JMSException {
 
                 TextMessage message = session.createTextMessage(msg);
+                message.setStringProperty("AtocId", atocId);
                 return message;
             }
         });

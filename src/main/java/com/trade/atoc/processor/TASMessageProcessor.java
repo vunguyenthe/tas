@@ -9,8 +9,8 @@ public class TASMessageProcessor implements Runnable {
 	private Thread thread;
 	private String threadName;
 	public static SimpleCommunicationSystem communicationSystem = null;
-	public TASMessageProcessor(String name) throws JMSException {
-		threadName = name;
+	public TASMessageProcessor() throws JMSException {
+		threadName = TASMessageProcessor.class.getSimpleName();
 		System.out.println("Creating " + threadName);
 		init();
 	}
@@ -39,7 +39,7 @@ public class TASMessageProcessor implements Runnable {
 		while (true) {
 			String message = null;
 			try {
-				message = communicationSystem.getReceivedMessage();
+				message = communicationSystem.getReceivedAtocMessage();
 			} catch (JMSException e) {
 				e.printStackTrace();
 			}

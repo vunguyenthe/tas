@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 
+import com.trade.atoc.message.base.BaseMessage;
 import com.trade.atoc.system.config.SystemConfiguration;
 
 public class SimpleCommunicationSystem {
@@ -18,19 +19,21 @@ public class SimpleCommunicationSystem {
 	private static final Logger logger = LoggerFactory
 			.getLogger(SimpleCommunicationSystem.class);
 	private TopicMessageSubcriber listener = null;
-	private TopicMessagePublisher publisher = null;
+	private static TopicMessagePublisher publisher = null;
 	private DefaultMessageListenerContainer container = new DefaultMessageListenerContainer();
 	private ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(SystemConfiguration.user, SystemConfiguration.password, SystemConfiguration.broker_url);
 
 	private static final int SIZE_QUEUE = 10000;
-	private BlockingQueue<String> eventQueue = new LinkedBlockingQueue<String>(
-			SIZE_QUEUE);
+	private BlockingQueue<String> atocMessageQueue = null;
+	public static BlockingQueue<BaseMessage> mobileMessageQueue = null;
 	JmsTemplate jmsTemplate = new JmsTemplate();
 
 	public SimpleCommunicationSystem() throws JMSException {
-		eventQueue = new LinkedBlockingQueue<String>(SIZE_QUEUE);
+		atocMessageQueue = new LinkedBlockingQueue<String>(SIZE_QUEUE);
+		mobileMessageQueue = new LinkedBlockingQueue<BaseMessage>(
+				SIZE_QUEUE);
 		initialize();
-		listener.setBlockingQueue(eventQueue);
+		listener.setBlockingQueue(atocMessageQueue);
 
 	}
 
@@ -59,7 +62,6 @@ public class SimpleCommunicationSystem {
 			defaultMessageListenerContainer.setDestination(destination);
 			jmsTemplate.setConnectionFactory(connectionFactory);
 			jmsTemplate.setDefaultDestination(destination);
-			//jmsTemplate.setMessageSelector(buildMessageSelector(userId));
 			publisher.setJmsTemplate(jmsTemplate);
 			System.out.println("registerPublisher is ok -> " + destinationName);
 		}
@@ -70,23 +72,21 @@ public class SimpleCommunicationSystem {
 		registerPublisher(SystemConfiguration.tas_atoc);
 	}
 
-	public String getReceivedMessage() throws JMSException {
+	public String getReceivedAtocMessage() throws JMSException {
 
 		String msg = null;
 		try {
 			System.out.println("Take a message from ATOC");
-			msg = eventQueue.take();
-			publisher.sendMessages(msg);
-			System.out.println("Send message to ATOC" + msg);
+			msg = atocMessageQueue.take();
 		} catch (InterruptedException e) {
 			logger.error("Message receive failed : " + e.getMessage(), e);
 		}
 		return msg;
 	}
 
-	public void sendMessage(String message) {
+	public void sendMessage(String message, String atocId) throws JMSException {
 
-		this.getPublisher().send(message);
+		this.getPublisher().sendMessages(message, atocId);
 	}
 
 	public void setMessageSend(String messageSend) {
@@ -98,9 +98,26 @@ public class SimpleCommunicationSystem {
 
 		return publisher;
 	}
+	public BlockingQueue<BaseMessage> getMobileMessageQueue(){
+		return mobileMessageQueue;
+	}
+	public int getSizeAtocMessagesQueue() {
 
-	public int getSizeEventQueue() {
+		return this.atocMessageQueue.size();
+	}
+	public int getSizeMobilesMessagesQueue() {
 
-		return this.eventQueue.size();
+		return SimpleCommunicationSystem.mobileMessageQueue.size();
+	}
+	public BaseMessage getReceivedMobileMessage() throws JMSException {
+
+		BaseMessage msg = null;
+		try {
+			System.out.println("Take a message from Mobile");
+			msg = mobileMessageQueue.take();
+		} catch (InterruptedException e) {
+			logger.error("Message receive failed : " + e.getMessage(), e);
+		}
+		return msg;
 	}
 }

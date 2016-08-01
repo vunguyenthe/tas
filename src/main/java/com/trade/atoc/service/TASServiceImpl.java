@@ -4,8 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.trade.atoc.activemq.config.SimpleCommunicationSystem;
-import com.trade.atoc.json.JSONParser;
-import com.trade.atoc.json.adapter.AdapterJsonBuilder;
 import com.trade.atoc.message.base.BaseMessage;
 
 @Service("tasService")
@@ -16,12 +14,8 @@ public class TASServiceImpl implements TASService {
 	public void fowardMessageToQueue(
 			final SimpleCommunicationSystem communicationSystem,
 			BaseMessage message) {
-		String json ="";
 		try {
-		JSONParser.registerType(message.getClass());
-		json = JSONParser.toJson(message);
-		communicationSystem.sendMessage(json);
-		System.out.println("json: " + json);
+			communicationSystem.getMobileMessageQueue().offer(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

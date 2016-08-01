@@ -12,18 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.trade.atoc.activemq.config.SimpleCommunicationSystem;
-import com.trade.atoc.enums.MessageStatus;
 import com.trade.atoc.json.JSONParser;
 import com.trade.atoc.message.OrderClose;
 import com.trade.atoc.message.OrderDelete;
 import com.trade.atoc.message.OrderModify;
 import com.trade.atoc.message.OrderSend;
+import com.trade.atoc.processor.MobileMessageProcessor;
 import com.trade.atoc.processor.TASMessageProcessor;
 import com.trade.atoc.service.TASService;
 import com.trade.atoc.system.config.SystemConfiguration;
@@ -44,12 +43,19 @@ public class TASController implements ServletConfigAware {
 		JSONParser.registerType(OrderSend.class);
 		JSONParser.registerType(OrderDelete.class);
 		JSONParser.registerType(OrderClose.class);
-		JSONParser.registerType(OrderModify.class);
 		TASMessageProcessor R1;
+		MobileMessageProcessor R2;
 		try {
-			R1 = new TASMessageProcessor("TASMessageProcessor");
+			R1 = new TASMessageProcessor();
 			communicationSystem = TASMessageProcessor.communicationSystem;
 			R1.start();			
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			R2 = new MobileMessageProcessor(communicationSystem);
+			R2.start();			
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

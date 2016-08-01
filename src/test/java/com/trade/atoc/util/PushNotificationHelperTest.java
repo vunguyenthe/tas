@@ -18,13 +18,13 @@ public class PushNotificationHelperTest {
 	private static final Double takeprofit = 120.000;
 	private static final String deviceAlias = "vunguyen";
 	
-	@Test
+	//@Test
 	public void testRequestPushNotification() {
 		OrderSend orderSend = new OrderSend();
 		orderSend.init(deviceAlias, messageId, symbol, cmd, volume, price,
 				slippage, stoploss, takeprofit, 1234, 0L, 0);
 		JSONParser.registerType(OrderSend.class);
 		String json = JSONParser.toJson(orderSend);
-		PushNotificationHelper.requestPushNotificationWithAlias(json);
+		PushNotificationHelper.requestPushNotificationWithAlias(json);//
 	}
 }
